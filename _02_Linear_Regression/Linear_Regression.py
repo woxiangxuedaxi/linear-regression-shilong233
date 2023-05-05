@@ -31,19 +31,32 @@ def ridge(data):
 def lasso(data):
     X, y = read_data()
 
-    # 将 X 展平成二维数组
-    n_samples = X.shape[0]
-    X_flat = X.reshape((n_samples, -1))
-
-    # 设置 Lasso 回归的超参数 alpha
+    # 设置超参数
     alpha = 0.1
+    learning_rate = 0.01
+    n_iterations = 1000
 
-    # 创建 Lasso 回归模型
-    lasso = Lasso(alpha=alpha)
+    # 初始化权重
+    np.random.seed(0)
+    w = np.random.randn(X_flat.shape[1])
 
-    # 训练模型
-    lasso.fit(X_flat, y)
-    return lasso.coef_ @ data
+    # 实现 Lasso 回归的梯度下降算法
+    for i in range(n_iterations):
+        # 计算预测值
+        y_pred = X_flat.dot(w)
+    
+        # 计算误差
+        error = y - y_pred
+    
+        # 计算 L1 正则化项的梯度
+        l1_grad = alpha * np.sign(w)
+    
+        # 计算权重的梯度
+        grad = -2 * X_flat.T.dot(error) / n_samples + l1_grad
+    
+        # 更新权重
+        w -= learning_rate * grad
+    return w @ data
 
 def read_data(path='./data/exp02/'):
     x = np.load(path + 'X_train.npy')
