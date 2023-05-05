@@ -31,36 +31,35 @@ def ridge(data):
 def lasso(data):
     X, y = read_data()
 
-    # 设置超参数
-    alpha = 10
-    learning_rate = 0.01
-    n_iterations = 1000
-    
-     # 将 X 展平成二维数组
-    n_samples = X.shape[0]
-    X_flat = X.reshape((n_samples, -1))
-    
-    # 初始化权重
-    np.random.seed(0)
-    w = np.random.randn(X_flat.shape[1])
-
-    # 实现 Lasso 回归的梯度下降算法
-    for i in range(n_iterations):
-        # 计算预测值
-        y_pred = X_flat.dot(w)
-    
-        # 计算误差
-        error = y - y_pred
-    
-        # 计算 L1 正则化项的梯度
-        l1_grad = alpha * np.sign(w)
-    
-        # 计算权重的梯度
-        grad = -2 * X_flat.T.dot(error) / n_samples + l1_grad
-    
-        # 更新权重
-        w -= learning_rate * grad
+    w = lasso(X, y, alpha)
     return w @ data
+
+
+def lasso(X, y, alpha, max_iter=1000, tol=1e-4):
+    # 初始化权重向量
+    w = np.zeros(X.shape[1])
+
+    # 坐标下降算法
+    for i in range(max_iter):
+        w_prev = np.copy(w)
+        for j in range(X.shape[1]):
+            X_j = X[:, j]
+            X_not_j = np.delete(X, j, axis=1)
+            w_not_j = np.delete(w, j)
+            c = 2 * np.dot(X_j, X_j)
+            r = y - np.dot(X_not_j, w_not_j)
+            z = np.dot(X_j, r)
+            if z < -alpha:
+                w_j = (z + alpha) / c
+            elif z > alpha:
+                w_j = (z - alpha) / c
+            else:
+                w_j = 0
+            w[j] = w_j
+        if np.sum(np.abs(w - w_prev)) < tol:
+            break
+
+    return w
 
 def read_data(path='./data/exp02/'):
     x = np.load(path + 'X_train.npy')
