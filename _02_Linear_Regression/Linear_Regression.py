@@ -9,7 +9,7 @@ except ImportError as e:
     import numpy as np
 
 def ridge(data):
-    X,Y = read_data()
+    X,y = read_data()
     
     # 将 X 展平成二维数组
     n_samples = X.shape[0]
@@ -29,7 +29,7 @@ def ridge(data):
     return w @ data
    
 def lasso(data):
-    x, y = read_data()
+    x, Y = read_data()
     weight = data
     y = np.dot(weight, x.T)
     l = 2500
