@@ -35,7 +35,11 @@ def lasso(data):
     alpha = 0.1
     learning_rate = 0.01
     n_iterations = 1000
-
+    
+     # 将 X 展平成二维数组
+    n_samples = X.shape[0]
+    X_flat = X.reshape((n_samples, -1))
+    
     # 初始化权重
     np.random.seed(0)
     w = np.random.randn(X_flat.shape[1])
