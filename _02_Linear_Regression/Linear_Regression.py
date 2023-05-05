@@ -31,7 +31,7 @@ def ridge(data):
 def lasso(data):
     X, y = read_data()
 
-    w = lassotest(X, y, 0.5)
+    w = lassotest(X, y, 0.9)
     return w @ data
 
 
