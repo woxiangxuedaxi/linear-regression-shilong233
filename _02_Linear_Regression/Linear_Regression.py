@@ -10,10 +10,24 @@ except ImportError as e:
 
 def ridge(data):
     x,y = read_data()
-    l = -0.1
-    weight = np.dot(np.linalg.inv((np.dot(x.T,x)+np.dot(l,np.eye(6)))),np.dot(x.T,y))
-    return weight @ data
     
+    # 将 X 展平成二维数组
+    n_samples = X.shape[0]
+    X_flat = X.reshape((n_samples, -1))
+
+    # 设置岭回归的超参数 alpha
+    alpha = 0.1
+
+    # 计算 X_flat 的转置矩阵
+    X_flat_transpose = np.transpose(X_flat)
+
+    # 计算矩阵 X_flat_transpose * X_flat + alpha * I 的逆矩阵
+    inverse = np.linalg.inv(X_flat_transpose.dot(X_flat) + alpha * np.identity(X_flat.shape[1]))
+
+    # 计算最优权重
+    w = inverse.dot(X_flat_transpose).dot(y)
+    return w @ data
+   
 def lasso(data):
     x, Y = read_data()
     weight = data
