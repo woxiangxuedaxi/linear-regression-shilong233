@@ -16,7 +16,7 @@ def ridge(data):
     X_flat = X.reshape((n_samples, -1))
 
     # 设置岭回归的超参数 alpha
-    alpha = 0.1
+    alpha = -0.1
 
     # 计算 X_flat 的转置矩阵
     X_flat_transpose = np.transpose(X_flat)
