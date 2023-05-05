@@ -31,11 +31,11 @@ def ridge(data):
 def lasso(data):
     X, y = read_data()
 
-    w = lasso(X, y, alpha)
+    w = lassotest(X, y, 0.1)
     return w @ data
 
 
-def lasso(X, y, alpha, max_iter=1000, tol=1e-4):
+def lassotest(X, y, alpha, max_iter=1000, tol=1e-4):
     # 初始化权重向量
     w = np.zeros(X.shape[1])
 
