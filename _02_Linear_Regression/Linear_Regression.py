@@ -30,13 +30,10 @@ def ridge(data):
    
 def lasso(data):
     X,y = read_data()
-    eps = 1e-15
-    alpha_max = np.max(np.abs(X.T @ y)) / n_samples
-    alpha = l1_ratio * alpha_max
     w = lassotest(X,y，alpha)
     
     return w @ data
-def lassotest(X, y, alpha, max_iter=1000, tol=1e-4):
+def lassotest(X, y, alpha=0.00001, max_iter=3000, tol=1e-4):
     n_samples, n_features = X.shape
     w = np.zeros(n_features)
     r = y.copy()  # residual
