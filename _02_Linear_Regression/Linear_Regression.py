@@ -29,16 +29,21 @@ def ridge(data):
     return w @ data
    
 def lasso(data):
-    x, Y = read_data()
-    weight = data
-    y = np.dot(weight, x.T)
-    l = 2500
-    rate = 0.00000000001
-    for i in range(int(2e5)):
-        y = np.dot(weight, x.T)
-        dw = np.dot(y - Y, x) + l * np.sign(weight)
-        weight = weight * (1 - (rate * l / 6)) - dw * rate
-    return weight @ data
+    X, y = read_data()
+
+    # 将 X 展平成二维数组
+    n_samples = X.shape[0]
+    X_flat = X.reshape((n_samples, -1))
+
+    # 设置 Lasso 回归的超参数 alpha
+    alpha = 0.1
+
+    # 创建 Lasso 回归模型
+    lasso = Lasso(alpha=alpha)
+
+    # 训练模型
+    lasso.fit(X_flat, y)
+    return lasso.coef_ @ data
 
 def read_data(path='./data/exp02/'):
     x = np.load(path + 'X_train.npy')
