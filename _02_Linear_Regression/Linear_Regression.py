@@ -29,7 +29,7 @@ def ridge(data):
     return w @ data
    
 def lasso(data):
-    x, Y = read_data()
+    x, y = read_data()
     weight = data
     y = np.dot(weight, x.T)
     l = 2500
