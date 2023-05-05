@@ -9,7 +9,7 @@ except ImportError as e:
     import numpy as np
 
 def ridge(data):
-    x,y = read_data()
+    X,Y = read_data()
     
     # 将 X 展平成二维数组
     n_samples = X.shape[0]
