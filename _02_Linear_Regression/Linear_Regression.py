@@ -33,7 +33,7 @@ def lasso(data):
     w = lassotest(X,y)
     
     return w @ data
-def lassotest(X, y, alpha=1.0, max_iter=1000, tol=1e-4):
+def lassotest(X, y, alpha=0.1, max_iter=1000, tol=1e-4):
     n_samples, n_features = X.shape
     w = np.zeros(n_features)
     r = y.copy()  # residual
