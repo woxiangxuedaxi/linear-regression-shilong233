@@ -32,7 +32,7 @@ def lasso(data):
     X, y = read_data()
 
     # 设置超参数
-    alpha = -0.1
+    alpha = 10
     learning_rate = 0.01
     n_iterations = 1000
     
