@@ -35,7 +35,7 @@ def lasso(data):
     return w @ data
 
 
-def lassotest(X, y, alpha, max_iter=3000, tol=1e-4):
+def lassotest(X, y, alpha, max_iter=5000, tol=1e-4):
     # 初始化权重向量
     w = np.zeros(X.shape[1])
 
